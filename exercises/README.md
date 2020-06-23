@@ -1,5 +1,10 @@
 # Exercises
 
+- [Chapter 14: Deep Computer Vision Using Convolutional Neural Networks](#c14)
+- [Chapter 15: Processing Sequences Using RNNs and CNNs](#c15)
+- [Chapter 16: Natural Language Processing with RNNs and Attention](#c16)
+
+<a name="c14"></a>
 ## Chapter 14: Deep Computer Vision Using Convolutional Neural Networks
 
 1. **What are the advantages of a CNN over a fully connected DNN for image classification?**
@@ -172,6 +177,7 @@ using Deep Learning.**
 
     _See notebooks_
 
+<a name="c15"></a>
 ## Chapter 15: Processing Sequences Using RNNs and CNNs
 
 1. **Can you think of a few applications for a sequence-to-sequence RNN? What about a
@@ -310,6 +316,7 @@ using Deep Learning.**
 
     _See notebooks_
 
+<a name="c16"></a>
 # Chapter 16: Natural Language Processing with RNNs and Attention
 
 1. **What are the pros and cons of using a stateful RNN versus a stateless RNN?**
