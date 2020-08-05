@@ -25,8 +25,12 @@
     • Finally, a DNN has no prior knowledge of how pixels are organized; it does not know that nearby
     pixels are close. A CNN’s architecture embeds this prior knowledge. Lower layers typically identify
     features in small areas of the images, while higher layers combine the lower-level features into
-    larger features. This works well with most natural images, giving CNNs a decisive head start com‐
-    pared to DNNs.
+    larger features. This works well with most natural images, giving CNNs a decisive head start compared
+    to DNNs.
+
+    ```python
+    import tensorflow as tf
+    ```
     </details>
 
 2. **Consider a CNN composed of three convolutional layers, each with 3 × 3 kernels, a stride of 2,
@@ -83,10 +87,15 @@
     <summary>Answer</summary>
     If your GPU runs out of memory while training a CNN, here are five things you could try to solve the
     problem (other than purchasing a GPU with more RAM):
+
     • Reduce the mini-batch size.
+
     • Reduce dimensionality using a larger stride in one or more layers.
+
     • Remove one or more layers.
+
     • Use 16-bit floats instead of 32-bit floats.
+
     • Distribute the CNN across multiple devices.
     </details>
 
