@@ -1,0 +1,72 @@
+name: Jupyter Notebooks
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  tutorials:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      # Prevent all build to stop if a single one fails
+      fail-fast: false
+      matrix:
+        name: [
+          nb-ubuntu-gcc-py37,
+          nb-osx-clang-py37,
+          ]
+
+        include:
+          - name: nb-ubuntu-gcc-py37
+            os: ubuntu-16.04
+            compiler: gcc-9
+
+          - name: nb-osx-clang-py37
+            os: macos-latest
+            compiler: clang
+
+    steps:
+    - name: Checkout astronet
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+
+    - uses: conda-incubator/setup-miniconda@v1
+      with:
+        activate-environment: astronet
+        environment-file: environment.yml
+        python-version: 3.7
+        auto-activate-base: false
+
+    - shell: bash -l {0}
+      run: |
+        conda info
+        conda list
+
+    - name: Check Environment
+      run: |
+        which python
+        which pip
+        python --version
+
+    - name: Install dependencies
+      run: |
+        pip install pytest
+        pip install pytest-cov
+        pip install nbval
+
+    - name: Mini-Analysis Pipeline
+      run: |
+        pytest --nbval 0*.ipynb
+        pytest --nbval 1*.ipynb
