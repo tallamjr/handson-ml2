@@ -35,7 +35,7 @@ jobs:
             compiler: clang
 
     steps:
-    - name: Checkout astronet
+    - name: Checkout handson-ml2
       uses: actions/checkout@v2
 
     - name: Set up Python 3.7
@@ -45,7 +45,7 @@ jobs:
 
     - uses: conda-incubator/setup-miniconda@v1
       with:
-        activate-environment: astronet
+        activate-environment: tf2
         environment-file: environment.yml
         python-version: 3.7
         auto-activate-base: false
@@ -67,7 +67,7 @@ jobs:
         pip install pytest-cov
         pip install nbval
 
-    - name: Mini-Analysis Pipeline
+    - name: Check all chapters
       run: |
         pytest --nbval 0*.ipynb
         pytest --nbval 1*.ipynb
