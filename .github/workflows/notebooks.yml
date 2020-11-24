@@ -1,0 +1,82 @@
+name: Jupyter Notebooks
+
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the master branch
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  tutorials:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+    strategy:
+      # Prevent all build to stop if a single one fails
+      fail-fast: false
+      matrix:
+        name: [
+          nb-ubuntu-gcc-py378,
+          nb-osx-clang-py378,
+          ]
+
+        include:
+          - name: nb-ubuntu-gcc-py378
+            os: ubuntu-16.04
+            compiler: gcc-9
+
+          - name: nb-osx-clang-py378
+            os: macos-latest
+            compiler: clang
+
+    steps:
+    - name: Checkout handson-ml2
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+
+    - uses: conda-incubator/setup-miniconda@v1
+      with:
+        activate-environment: tf2
+        environment-file: environment.yml
+        python-version: 3.7
+        auto-activate-base: false
+
+    - shell: bash -l {0}
+      run: |
+        conda info
+        conda list
+
+    - name: Check Environment
+      run: |
+        PATH="/usr/share/miniconda/envs/tf2/bin:$PATH"
+        PATH="/usr/local/miniconda/envs/tf2/bin:$PATH"
+        which python
+        which pip
+        python --version
+
+    - name: Install dependencies
+      run: |
+        PATH="/usr/share/miniconda/envs/tf2/bin:$PATH"
+        PATH="/usr/local/miniconda/envs/tf2/bin:$PATH"
+        pip install pytest
+        pip install pytest-cov
+        pip install nbval
+
+    - name: Check all chapters
+      run: |
+        PATH="/usr/share/miniconda/envs/tf2/bin:$PATH"
+        PATH="/usr/local/miniconda/envs/tf2/bin:$PATH"
+        pytest --nbval-lax 01*.ipynb
+        # Using above line as proof of concept to show notebook evaluation.
+        # The lines below would run all notebooks (this would take several hours)
+        # pytest --nbval-lax 0*.ipynb
+        # pytest --nbval-lax 1*.ipynb
