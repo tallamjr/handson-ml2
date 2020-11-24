@@ -21,8 +21,8 @@ jobs:
       fail-fast: false
       matrix:
         name: [
-          nb-ubuntu-gcc-py37,
-          nb-osx-clang-py37,
+          nb-ubuntu-gcc-py378,
+          nb-osx-clang-py378,
           ]
 
         include:
