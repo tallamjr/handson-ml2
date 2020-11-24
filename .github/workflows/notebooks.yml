@@ -18,7 +18,7 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     strategy:
       # Prevent all build to stop if a single one fails
-      fail-fast: false
+      fail-fast: true
       matrix:
         name: [
           nb-ubuntu-gcc-py37,
@@ -57,23 +57,19 @@ jobs:
 
     - name: Check Environment
       run: |
-        PATH="/usr/share/miniconda/envs/tf2/bin:$PATH"
-        PATH="/usr/local/miniconda/envs/tf2/bin:$PATH"
+        export PATH="/usr/share/miniconda/envs/tf2/bin:$PATH"
+        export PATH="/usr/local/miniconda/envs/tf2/bin:$PATH"
         which python
         which pip
         python --version
 
     - name: Install dependencies
       run: |
-        PATH="/usr/share/miniconda/envs/tf2/bin:$PATH"
-        PATH="/usr/local/miniconda/envs/tf2/bin:$PATH"
         pip install pytest
         pip install pytest-cov
         pip install nbval
 
     - name: Check all chapters
       run: |
-        PATH="/usr/share/miniconda/envs/tf2/bin:$PATH"
-        PATH="/usr/local/miniconda/envs/tf2/bin:$PATH"
-        pytest --nbval 0*.ipynb
-        pytest --nbval 1*.ipynb
+        pytest --nbval-lax 0*.ipynb
+        pytest --nbval-lax 1*.ipynb
