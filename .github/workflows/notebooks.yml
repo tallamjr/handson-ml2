@@ -75,5 +75,8 @@ jobs:
       run: |
         PATH="/usr/share/miniconda/envs/tf2/bin:$PATH"
         PATH="/usr/local/miniconda/envs/tf2/bin:$PATH"
-        pytest --nbval-lax 0*.ipynb
-        pytest --nbval-lax 1*.ipynb
+        pytest --nbval-lax 01*.ipynb
+        # Using above line as proof of concept to show notebook evaluation.
+        # The lines below would run all notebooks (this would take several hours)
+        # pytest --nbval-lax 0*.ipynb
+        # pytest --nbval-lax 1*.ipynb
