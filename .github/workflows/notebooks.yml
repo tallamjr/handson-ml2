@@ -18,7 +18,7 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
     strategy:
       # Prevent all build to stop if a single one fails
-      fail-fast: true
+      fail-fast: false
       matrix:
         name: [
           nb-ubuntu-gcc-py37,
@@ -26,11 +26,11 @@ jobs:
           ]
 
         include:
-          - name: nb-ubuntu-gcc-py37
+          - name: nb-ubuntu-gcc-py378
             os: ubuntu-16.04
             compiler: gcc-9
 
-          - name: nb-osx-clang-py37
+          - name: nb-osx-clang-py378
             os: macos-latest
             compiler: clang
 
